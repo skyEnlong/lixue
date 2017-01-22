@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">LiXue</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+
+    <string name="str_no_comment">没有内容</string>
+</resources>

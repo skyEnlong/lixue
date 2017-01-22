@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="TextViewCorner">
+        <attr name="border_raduis" format="dimension" />
+        <attr name="border_color_in" format="color"/>
+        <attr name="border_color_s" format="color"></attr>
+    </declare-styleable>
+</resources>
