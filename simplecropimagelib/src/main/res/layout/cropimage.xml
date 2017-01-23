@@ -1,0 +1,95 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
+
+    <view
+        android:id="@+id/image"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_x="0dip"
+        android:layout_y="0dip"
+        class="eu.janmuller.android.simplecropimage.CropImageView"
+        android:background="#55000000" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+          >
+
+        <Button
+            android:id="@+id/discard"
+            style="@style/CropButton"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="50dip"
+            android:visibility="gone"
+            android:layout_alignParentLeft="true"
+            android:text="@string/str_common_cancel" />
+
+        <ImageButton
+            android:id="@+id/rotateLeft"
+            style="@style/CropButton"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="10dip"
+            android:visibility="gone"
+            android:layout_toRightOf="@id/discard"
+            android:src="@drawable/ic_rotate_left" />
+
+        <ImageButton
+            android:id="@+id/rotateRight"
+            style="@style/CropButton"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="10dip"
+            android:visibility="gone"
+            android:layout_toRightOf="@id/rotateLeft"
+            android:src="@drawable/ic_rotate_right" />
+
+        <!--<Button-->
+            <!--android:id="@+id/save"-->
+            <!--style="@style/CropButton"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_marginRight="50dip"-->
+            <!--android:text="@string/save" />-->
+        <LinearLayout
+            android:id="@+id/bottom_view"
+            android:layout_width="match_parent"
+            android:layout_height="80dip"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/cancel_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#85000000"
+                android:gravity="center"
+                android:text="@string/str_common_cancel"
+                android:textColor="@color/codoon_white"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/ok_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#85000000"
+                android:gravity="center"
+                android:text="@string/str_common_save"
+                android:textColor="@color/codoon_white"
+                android:textSize="18dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

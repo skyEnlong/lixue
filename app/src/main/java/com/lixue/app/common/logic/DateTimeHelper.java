@@ -3,6 +3,7 @@ package com.lixue.app.common.logic;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by enlong on 2017/1/22.
@@ -45,5 +46,39 @@ public class DateTimeHelper {
 
         cal.add(Calendar.DATE, day);
         return sdf.format(cal.getTime());
+    }
+
+    public static int calcAgeByDate(Date birthDay) {
+
+        Calendar cal = Calendar.getInstance();
+        if (cal.before(birthDay)) {
+            return 0;
+        }
+
+        int yearNow = cal.get(Calendar.YEAR);
+        int monthNow = cal.get(Calendar.MONTH) + 1;
+        int dayOfMonthNow = cal.get(Calendar.DAY_OF_MONTH);
+
+        cal.setTime(birthDay);
+        int yearBirth = cal.get(Calendar.YEAR);
+        int monthBirth = cal.get(Calendar.MONTH);
+        int dayOfMonthBirth = cal.get(Calendar.DAY_OF_MONTH);
+
+        int age = yearNow - yearBirth;
+
+        if (monthNow <= monthBirth) {
+            if (monthNow == monthBirth) {
+                // monthNow==monthBirth
+                if (dayOfMonthNow < dayOfMonthBirth) {
+                    age--;
+                }
+            } else {
+                // monthNow>monthBirth
+                age--;
+            }
+        }
+
+        return age;
+
     }
 }

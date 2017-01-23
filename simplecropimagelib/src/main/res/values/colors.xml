@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <drawable name="white">#ffffff</drawable>
+    <drawable name="blue">#2A00FF</drawable>
+    <drawable name="green">#709e18</drawable>
+    <drawable name="red">#eb2626</drawable>
+    <drawable name="orange">#eea415</drawable>
+    <drawable name="gray_line">#d0d0d0</drawable>
+
+    <color name="codoon_gray">#999999</color>
+    <color name="codoon_green">#6cbb52</color>
+    <color name="codoon_white">#ffffff</color>
+
+
+</resources>

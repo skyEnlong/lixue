@@ -4,7 +4,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/adver_layout"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/banner_ad_height">
+    android:layout_height="match_parent">
 
     <com.lixue.app.common.view.AutoScrollViewPager
         android:id="@+id/banner_pager"
