@@ -8,4 +8,6 @@
 
 
     <string name="str_no_comment">没有内容</string>
+    <string name="choose_photo_no_album">没有相册</string>
+    <string name="choose_photo_not_find_device">没找到设备</string>
 </resources>

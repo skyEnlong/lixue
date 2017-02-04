@@ -22,7 +22,8 @@ public class MyDBHelper extends BaseDBHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(UserTokenDB.creat_sql);
 
     }
 

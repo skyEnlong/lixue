@@ -2,6 +2,8 @@ package com.lixue.app.library.util;
 
 import android.text.TextUtils;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -246,5 +248,18 @@ public class StringUtil {
             }
         }
         return new String(sb);
+    }
+
+    public static String get1fFormat(Number params) {
+        DecimalFormat distanceDecimalFormat = new DecimalFormat("0.00");
+        distanceDecimalFormat.setRoundingMode(RoundingMode.DOWN);
+        return distanceDecimalFormat.format(params);
+    }
+
+    public static String get2fFormat(Number params) {
+        DecimalFormat distanceDecimalFormat = new DecimalFormat("0.0");
+        distanceDecimalFormat.setRoundingMode(RoundingMode.DOWN);
+        String str = distanceDecimalFormat.format(Double.valueOf(String.valueOf(params)));
+        return str;
     }
 }

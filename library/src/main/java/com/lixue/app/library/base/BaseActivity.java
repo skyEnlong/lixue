@@ -45,4 +45,9 @@ public class BaseActivity extends AppCompatActivity implements Subscriber<String
     public void onComplete() {
 
     }
+
+    public void showMsg(String str){
+        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+    }
+
 }

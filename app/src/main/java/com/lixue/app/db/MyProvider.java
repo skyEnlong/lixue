@@ -6,7 +6,11 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.CancellationSignal;
+import android.os.ParcelFileDescriptor;
 import android.support.annotation.Nullable;
+
+import java.io.FileNotFoundException;
 
 /**
  * Created by enlong on 2017/1/22.
@@ -98,4 +102,19 @@ public class MyProvider extends ContentProvider {
 
         return resut;
     }
+
+
+    @Nullable
+    @Override
+    public ParcelFileDescriptor openFile(Uri uri, String mode, CancellationSignal signal) throws FileNotFoundException {
+        return super.openFile(uri, mode, signal);
+    }
+
+
+    @Nullable
+    @Override
+    public ParcelFileDescriptor openFile(Uri uri, String mode) throws FileNotFoundException {
+        return super.openFile(uri, mode);
+    }
+
 }

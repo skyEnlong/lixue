@@ -16,7 +16,7 @@ import okhttp3.Response;
  * Created by enlong on 2017/1/22.
  */
 
-public class HttpRequest {
+public abstract class HttpRequest {
     private String url;
     private HashMap<String, String> entry;
     public static final int METHOD_GET = 1;

@@ -1,5 +1,6 @@
 package com.lixue.app.library.util;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -7,8 +8,10 @@ import android.graphics.Matrix;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
+import android.net.Uri;
 import android.util.Log;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -383,5 +386,53 @@ public class BitmapUtil {
 
         return bitmap;
 
+    }
+
+
+    public static Bitmap decodeUriAsBitmap(Context context, Uri uri) {
+        Bitmap bitmap = null;
+        try {
+            bitmap = revitionImageSize(context, uri, 1024);
+        } catch (OutOfMemoryError e) {
+            e.printStackTrace();
+            return null;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return bitmap;
+    }
+
+    public static Bitmap revitionImageSize(Context context, Uri uri,
+                                           Integer sizeLimit) throws IOException {
+        int limit = 1024;
+        if (sizeLimit != null) {
+            limit = sizeLimit.intValue();
+        }
+        BufferedInputStream in = new BufferedInputStream(context
+                .getContentResolver().openInputStream(uri));
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeStream(in, null, options);
+        in.close();
+        int i = 0;
+        Bitmap bitmap = null;
+        while (true) {
+            if ((options.outWidth >> i <= limit)
+                    && (options.outHeight >> i <= limit)) {
+                in = new BufferedInputStream(context.getContentResolver()
+                        .openInputStream(uri));
+                options.inSampleSize = (int) Math.pow(2.0D, i);
+                options.inJustDecodeBounds = false;
+                options.inPreferredConfig = Bitmap.Config.RGB_565;
+                bitmap = BitmapFactory.decodeStream(in, null, options);
+                break;
+            }
+            i += 1;
+        }
+        return bitmap;
     }
 }

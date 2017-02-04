@@ -2,6 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.lixue.app">
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!-- 网络访问权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!--读取IMei -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
 
     <application
         android:allowBackup="true"
@@ -12,6 +20,13 @@
         android:theme="@style/AppTheme"
         >
 
+        <activity android:name=".login.ui.WelcomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <meta-data
             android:name="com.lixue.app.library.http.okhttp.okhttp3.OkHttpGlideModule"
             android:value="GlideModule" />
