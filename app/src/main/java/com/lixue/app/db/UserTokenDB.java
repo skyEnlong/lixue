@@ -6,7 +6,8 @@ import android.database.Cursor;
 import android.net.Uri;
 
 import com.lixue.app.library.base.BaseDB;
-import com.lixue.app.login.model.AuthToken;
+import com.lixue.app.login.model.UserInfo;
+
 
 /**
  * Created by enlong on 2017/1/22.
@@ -36,7 +37,7 @@ public class UserTokenDB extends BaseDB {
         return Uri.parse("content://" + MyDBHelper.AUTHORITY + "/usertoken");
     }
 
-    public Uri insert(AuthToken auth) {
+    public Uri insert(UserInfo auth) {
         ContentValues values = new ContentValues();
         values.put(Column_UserToken, auth.token);
         values.put(Column_User_Name, auth.nick);
@@ -46,7 +47,7 @@ public class UserTokenDB extends BaseDB {
         return resolver.insert(uri, values);
     }
 
-    public int updateIdByToken(AuthToken auth) {
+    public int updateIdByToken(UserInfo auth) {
         ContentValues values = new ContentValues();
         values.put(Column_UserToken, auth.token);
         values.put(Column_User_Name, auth.nick);
@@ -57,7 +58,7 @@ public class UserTokenDB extends BaseDB {
         return resolver.update(uri, values, where, null);
     }
 
-    public int updateTokenById(AuthToken auth) {
+    public int updateInfoById(UserInfo auth) {
         ContentValues values = new ContentValues();
         values.put(Column_UserToken, auth.token);
         values.put(Column_User_Name, auth.nick);
@@ -74,14 +75,14 @@ public class UserTokenDB extends BaseDB {
      *
      * @return
      */
-    public AuthToken getCurrentUser() {
+    public UserInfo getCurrentUser() {
         Cursor c = resolver.query(uri, null, null, null, null);
         if (null == c) return null;
 
-        AuthToken token = null;
+        UserInfo token = null;
         try {
             if (c.moveToFirst()) {
-                token = new AuthToken();
+                token = new UserInfo();
                 token.token = c.getString(c.getColumnIndex(Column_UserToken));
                 token.expire = c.getLong(c.getColumnIndex(Column_EXPIRE_IN));
                 token.user_id = c.getString(c.getColumnIndex(Column_User_Id));
@@ -103,7 +104,7 @@ public class UserTokenDB extends BaseDB {
      * @param auth
      * @return
      */
-    public int delete(AuthToken auth) {
+    public int delete(UserInfo auth) {
         String where = Column_User_Id + "='" + auth.user_id + "'";
         return resolver.delete(uri, where, null);
     }

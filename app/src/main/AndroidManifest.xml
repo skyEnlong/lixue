@@ -20,13 +20,21 @@
         android:theme="@style/AppTheme"
         >
 
-        <activity android:name=".login.ui.WelcomeActivity">
+        <activity android:name=".login.ui.WelcomeActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".login.ui.LoginActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".login.ui.MainActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
+
         <meta-data
             android:name="com.lixue.app.library.http.okhttp.okhttp3.OkHttpGlideModule"
             android:value="GlideModule" />

@@ -5,6 +5,6 @@ package com.lixue.app.library.http;
  */
 
 public interface IHttpResponse {
-    void onResponse(String result);
-    void onErr(String msg);
+    void onResponse(String reqUrl, String result);
+    void onErr( String msg);
 }

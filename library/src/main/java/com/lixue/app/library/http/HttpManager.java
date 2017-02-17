@@ -20,7 +20,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class HttpManager {
     private static HttpManager instance;
-
+    private Object lock;
 
     public static HttpManager getInstance() {
         if (instance == null) {
@@ -40,22 +40,22 @@ public class HttpManager {
      * @param handler
      */
     public void doTaskInBackGround(final HttpRequest request, final IHttpResponse handler) {
-        Flowable.create(new FlowableOnSubscribe<String>() {
+        Flowable.create(new FlowableOnSubscribe<ResJsonString>() {
             @Override
-            public void subscribe(final FlowableEmitter<String> subscriber) throws Exception {
+            public void subscribe(final FlowableEmitter<ResJsonString> subscriber) throws Exception {
                 dealWithSubscriber(request, subscriber);
             }
         }, BackpressureStrategy.LATEST)
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<String>() {
+                .subscribe(new Subscriber<ResJsonString>() {
                     @Override
                     public void onSubscribe(Subscription s) {
 
                     }
 
                     @Override
-                    public void onNext(String s) {
-                        if (null != handler) handler.onResponse(s);
+                    public void onNext(ResJsonString s) {
+                        if (null != handler) handler.onResponse(s.requestUrl, s.resultString);
                     }
 
                     @Override
@@ -78,23 +78,23 @@ public class HttpManager {
      * @param handler
      */
     public void doTaskInMainThread(final HttpRequest request, final IHttpResponse handler) {
-        Flowable.create(new FlowableOnSubscribe<String>() {
+        Flowable.create(new FlowableOnSubscribe<ResJsonString>() {
             @Override
-            public void subscribe(final FlowableEmitter<String> subscriber) throws Exception {
+            public void subscribe(final FlowableEmitter<ResJsonString> subscriber) throws Exception {
                 dealWithSubscriber(request, subscriber);
             }
         }, BackpressureStrategy.LATEST)
                 .subscribeOn(Schedulers.io())
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<String>() {
+                .subscribe(new Subscriber<ResJsonString>() {
                     @Override
                     public void onSubscribe(Subscription s) {
 
                     }
 
                     @Override
-                    public void onNext(String s) {
-                        if (null != handler) handler.onResponse(s);
+                    public void onNext(ResJsonString s) {
+                        if (null != handler) handler.onResponse(s.requestUrl, s.resultString);
                     }
 
                     @Override
@@ -110,10 +110,10 @@ public class HttpManager {
 
     }
 
-    private void dealWithSubscriber(final HttpRequest request, FlowableEmitter<String> subscriber) throws IOException, JSONException {
+    private void dealWithSubscriber(final HttpRequest request, FlowableEmitter<ResJsonString> subscriber) throws IOException, JSONException {
         RequestResult result = request.doTask();
         boolean isValid = checkTokenValid(result);
-        if (isValid) {
+        if (isValid || !request.isNeedToken) {
             String s = result.asString();
             JSONObject jo = new JSONObject(s);
 
@@ -122,7 +122,11 @@ public class HttpManager {
                 subscriber.onError(new Exception(jo.getString("msg")));
             } else {
             }
-            subscriber.onNext(jo.getString("data"));
+
+            ResJsonString data = new ResJsonString();
+            data.requestUrl = request.getUrl();
+            data.resultString = jo.getString("data");
+            subscriber.onNext(data);
         } else {
             //// TODO: 2017/1/22 to refhresh token
 
@@ -137,7 +141,10 @@ public class HttpManager {
             } else {
 
             }
-            subscriber.onNext(jo.getString("data"));
+            ResJsonString data = new ResJsonString();
+            data.requestUrl = request.getUrl();
+            data.resultString = jo.getString("data");
+            subscriber.onNext(data);
         }
 
         subscriber.onComplete();
@@ -147,10 +154,10 @@ public class HttpManager {
      * do rquest, call back in ui thread
      * @param request
      */
-    public void doTask(final HttpRequest request, final Subscriber<String> s) {
-        Flowable.create(new FlowableOnSubscribe<String>() {
+    public void doTask(final HttpRequest request, final Subscriber<ResJsonString> s) {
+        Flowable.create(new FlowableOnSubscribe<ResJsonString>() {
             @Override
-            public void subscribe(FlowableEmitter<String> subscriber) throws Exception {
+            public void subscribe(FlowableEmitter<ResJsonString> subscriber) throws Exception {
                 dealWithSubscriber(request, subscriber);
             }
         }, BackpressureStrategy.BUFFER).subscribeOn(Schedulers.io())
@@ -170,11 +177,13 @@ public class HttpManager {
         if (result.getStatusCode() == 200) {
             isValid = true;
         } else {
-            //// TODO: 2017/1/22
+            //// TODO: 2017/1/22  update token ,
+           isValid = false;
+
         }
 
         return isValid;
     }
 
-    ;
+
 }

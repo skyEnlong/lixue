@@ -4,15 +4,20 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.lixue.app.library.http.ResJsonString;
+
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by enlong on 2017/1/20.
  */
 
-public class BaseActivity extends AppCompatActivity implements Subscriber<String>{
-    protected Subscription subscription;
+public class BaseActivity extends AppCompatActivity implements Subscriber<ResJsonString>{
+    protected List<Subscription> subscription = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,22 +28,28 @@ public class BaseActivity extends AppCompatActivity implements Subscriber<String
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(null != subscription) subscription.cancel();
+        if(null != subscription && subscription.size() > 0){
+            for(Subscription s : subscription){
+                s.cancel();
+            }
+            subscription.clear();
+            subscription = null;
+        }
     }
 
     @Override
     public void onSubscribe(Subscription s) {
-        this.subscription = s;
+        this.subscription.add(s);
     }
 
     @Override
-    public void onNext(String o) {
+    public void onNext(ResJsonString o) {
         ////to do update
     }
 
     @Override
     public void onError(Throwable t) {
-        Toast.makeText(this, t.getMessage(), Toast.LENGTH_SHORT).show();
+        showMsg(t.getMessage());
     }
 
     @Override

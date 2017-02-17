@@ -1,14 +1,14 @@
 package com.lixue.app.library.http;
 
-import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  * Created by enlong on 2017/1/22.
  */
 
-public class ResponseJson {
+public class ResponseData<T> {
     public String msg;
     public int status;
-    public Array data;
+    public ArrayList<T> data;
 
 }

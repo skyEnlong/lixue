@@ -1,5 +1,6 @@
 package com.lixue.app.library.util;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -30,7 +31,7 @@ public class FileDownLoadTask {
     private String desFile = null;
     public final static int patchDownLoadCode = 1000;
     private DownProcessCallBack mDownProcessCallBack;
-
+    private Context mContext;
 
     public interface DownProcessCallBack {
         public int onDownProgress(long progress);
@@ -43,15 +44,12 @@ public class FileDownLoadTask {
 
 
 
-    public FileDownLoadTask(Handler handler, String url, String desPath, String desfileName) {
-        mHandler = handler;
-        mUrl = url;
-        this.desPath = desPath;
-        this.desFile = desfileName;
 
-    }
-
-    public FileDownLoadTask(String url, String desPath, String desFile) {
+    public FileDownLoadTask(Context mContext,
+                            String url,
+                            String desPath,
+                            String desFile) {
+        this.mContext = mContext;
         this.mUrl = url;
         this.desFile = desFile;
         this.desPath = desPath;
@@ -62,7 +60,7 @@ public class FileDownLoadTask {
     public void excute() {
         if (TextUtils.isEmpty(this.mUrl)) return;
 
-        final HttpRequest request = new HttpRequest(mUrl);
+        final HttpRequest request = new HttpRequest(mContext, mUrl);
         request.setMethod(HttpRequest.METHOD_GET);
 
         Flowable.create(new FlowableOnSubscribe<String>() {

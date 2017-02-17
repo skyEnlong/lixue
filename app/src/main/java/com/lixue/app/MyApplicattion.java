@@ -11,11 +11,12 @@ import com.lixue.app.library.util.CrashHandler;
  */
 
 public class MyApplicattion extends Application {
+    public static MyApplicattion instance;
 
     @Override
     public void onCreate() {
         super.onCreate();
-
+        instance= this;
         if (BuildConfig.DEBUG) {
 
             CrashHandler crashHandler = CrashHandler.getInstance();
