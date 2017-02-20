@@ -84,7 +84,7 @@ public class HttpManager {
                 dealWithSubscriber(request, subscriber);
             }
         }, BackpressureStrategy.LATEST)
-                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ResJsonString>() {
                     @Override

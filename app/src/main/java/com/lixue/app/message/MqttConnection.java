@@ -98,6 +98,9 @@ public class MqttConnection {
             public void onConnected() {
                 CLog.i(TAG, "mqtt onConnected");
 
+                String topicName = MqttConstant.PRIVATE_TOPIC + "/#";
+
+                subscribeToTopic(topicName);
             }
 
             @Override
@@ -272,6 +275,11 @@ public class MqttConnection {
         }
     }
 
+    /**
+     * 开始连接
+     * @param topicName
+     * @param messageBean
+     */
     public synchronized void connect(final String topicName,final MessageBean messageBean) {
 
         if (!NetUtil.isNetEnable(mContext)) {

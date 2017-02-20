@@ -8,9 +8,6 @@ import android.net.ConnectivityManager;
 
 import com.lixue.app.common.logic.NetReceiver;
 import com.lixue.app.library.util.CrashHandler;
-import com.lixue.app.message.MqttConnection;
-
-import java.net.URISyntaxException;
 
 /**
  * Created by enlong on 2017/1/22.
@@ -31,14 +28,13 @@ public class MyApplicattion extends Application {
             crashHandler.init(getApplicationContext());
         }
 
-        try {
-            MqttConnection.getInstance(this).init();
-            MqttConnection.getInstance(this).connect(null, null);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
 
+        initMessageConfig();
         addReceiver();
+    }
+
+    private void initMessageConfig() {
+
     }
 
     private void addReceiver() {
