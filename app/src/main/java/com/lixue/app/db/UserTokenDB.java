@@ -8,6 +8,8 @@ import android.net.Uri;
 import com.lixue.app.library.base.BaseDB;
 import com.lixue.app.login.model.UserInfo;
 
+import java.io.File;
+
 
 /**
  * Created by enlong on 2017/1/22.
@@ -34,7 +36,7 @@ public class UserTokenDB extends BaseDB {
 
     @Override
     public Uri getUri() {
-        return Uri.parse("content://" + MyDBHelper.AUTHORITY + "/usertoken");
+        return Uri.parse("content://" + MyDBHelper.AUTHORITY + File.separator + DATABASE_TABLE);
     }
 
     public Uri insert(UserInfo auth) {

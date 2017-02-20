@@ -400,7 +400,7 @@ public class FileUtils {
     }
 
     public static void downLoadFile(Context mContext, String url, String desPath, String desFilename, FileDownLoadTask.DownProcessCallBack callBack) {
-        FileDownLoadTask req = new FileDownLoadTask( url, desPath, desFilename);
+        FileDownLoadTask req = new FileDownLoadTask(mContext, url, desPath, desFilename);
         req.downLoadAsProcessCallBack(callBack);
     }
 

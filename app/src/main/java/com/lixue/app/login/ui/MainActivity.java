@@ -6,6 +6,10 @@ import android.support.v4.view.ViewPager;
 import com.lixue.app.MyActivity;
 import com.lixue.app.R;
 import com.lixue.app.library.view.SlidingTabLayout;
+import com.lixue.app.library.view.TabDataHolder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by enlong on 2017/2/13.
@@ -28,10 +32,14 @@ public class MainActivity extends MyActivity{
 
 
     private void initView() {
-
+        tabLayout = (SlidingTabLayout) findViewById(R.id.tab_layout);
+        contentPager = (ViewPager) findViewById(R.id.tab_content);
     }
 
     private void initData() {
+
+        List<TabDataHolder> dataHolders = new ArrayList<>();
+
 
     }
 }

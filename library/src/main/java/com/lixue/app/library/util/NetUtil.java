@@ -228,4 +228,14 @@ public class NetUtil {
         }
         return false;
     }
+
+    private String getConnectionType(int type) {
+        String connType = "";
+        if (type == ConnectivityManager.TYPE_MOBILE) {
+            connType = "3G网络数据";
+        } else if (type == ConnectivityManager.TYPE_WIFI) {
+            connType = "WIFI网络";
+        }
+        return connType;
+    }
 }
