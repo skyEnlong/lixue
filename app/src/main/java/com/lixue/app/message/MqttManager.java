@@ -33,13 +33,32 @@ public class MqttManager {
                     connection.init();
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
+                    subscriber.onError(e);
                 }
                 connection.connect(null, null);
+                subscriber.onComplete();
             }
         }, BackpressureStrategy.LATEST)
                 .observeOn(Schedulers.io())
                 .subscribe();
 
 
+    }
+
+    public void disConnect(){
+        connection.disconnect();
+    }
+
+    public void sendMsg(String topic, MessageBean bean){
+        Flowable.create(new FlowableOnSubscribe<ResJsonString>() {
+            @Override
+            public void subscribe(final FlowableEmitter<ResJsonString> subscriber) throws Exception {
+
+                connection.sendMsgToTopic(topic, bean);
+                subscriber.onComplete();
+            }
+        }, BackpressureStrategy.LATEST)
+                .observeOn(Schedulers.io())
+                .subscribe();
     }
 }
